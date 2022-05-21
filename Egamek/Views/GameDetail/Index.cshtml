@@ -1,0 +1,64 @@
+﻿@model Egamek_Business.ViewModels.GameDetailViewModel.GameDetailViewModel
+@{
+    ViewData["Title"] = "Index";
+    ViewData["GamesActive"] = "active";
+}
+
+<section id="video">
+    <div class="container">
+        <div class="row">
+            <div class="iframe">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/@Model.Game.Iframe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="button-favorite">
+    <div class="container">
+        <div class="row">
+            <a asp-controller="Home" asp-action="SetFavourite" asp-route-id="@Model.Game.Id" class="red-fav-btn">
+                <svg width="24" height="22" viewBox="0 0 21 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19.132 1.97008C16.929 -0.233917 13.216 -0.126917 10.882 2.20608L10.5 2.58808L10.118 2.20608C7.78402 -0.126917 4.07102 -0.233917 1.86802 1.97108C-0.335985 4.17508 -0.229984 7.88808 2.10302 10.2211L10.499 18.6171L18.894 10.2211C21.228 7.88808 21.334 4.17508 19.131 1.97108L19.132 1.97008Z" fill="white" />
+                </svg>
+                <p>ADD TO FAVORITES</p>
+            </a>
+        </div>
+    </div>
+</div>
+
+<section id="description">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 col-sm-12">
+                <div class="content">
+                    <div class="header">
+                        <p>Description</p>
+                        <div class="dscrptn-horizontal-line"></div>
+                    </div>
+                    <div class="text">
+                        @Html.Raw(Model.Game.Description)
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 col-sm-12">
+                <div class="content">
+                    <div class="header">
+                        <p class="rqrmts-title">Software Requirements</p>
+                        <div class="rqrmts-horizontal-line"></div>
+                    </div>
+                    <div class="text-li">
+                        <ul class="requirements-list">
+                            <li>Operating System: &nbsp; @Model.Game.OperatingSystem</li>
+                            <li>Processor: &nbsp; @Model.Game.Processor</li>
+                            <li>Video Card: &nbsp; @Model.Game.VideoCard</li>
+                            <li>RAM: &nbsp; @Model.Game.Ram</li>
+                            <li>Space: &nbsp; @Model.Game.Space</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

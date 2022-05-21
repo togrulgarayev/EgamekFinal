@@ -1,0 +1,124 @@
+﻿@using Egamek_Core.Entities
+@model Egamek_Business.ViewModels.GameViewModels.GameUpdateViewModel
+@{ ViewData["Title"] = "Update Game"; }
+
+
+<div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+        <div class="col-xl-10 col-lg-12 col-md-9">
+
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Update Game</h1>
+                                </div>
+                                <form enctype="multipart/form-data" class="user" method="post" asp-controller="Games" asp-action="Update">
+                                    <div class="form-group">
+                                        <input required asp-for="Name" autocomplete="off" class="form-control form-control-user text-center" style="font-size: 15px;"
+                                               placeholder="Game Name">
+                                        <span class="text-danger" asp-validation-for="Name"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        @*<input required asp-for="Description" autocomplete="off" class="form-control form-control-user text-center" style="font-size: 15px;"
+                                               placeholder="Game Description">*@
+                                        <textarea id="game-description" asp-for="Description" autocomplete="off" class="form-control form-control-user text-center" style="font-size: 15px;"
+                                                  placeholder="Game Description"></textarea>
+                                        <span class="text-danger" asp-validation-for="Description"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input required asp-for="Iframe" autocomplete="off" class="form-control form-control-user text-center" style="font-size: 15px;"
+                                               placeholder="Youtube">
+                                        <div style="display:flex;align-items:center;justify-content:center">
+                                            <p class="text-danger">Example:</p>
+                                            <img src="~/assets/img/sc.png" />
+                                        </div>
+                                        <span class="text-danger" asp-validation-for="Iframe"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input required asp-for="OperatingSystem" autocomplete="off" class="form-control form-control-user text-center" style="font-size: 15px;"
+                                               placeholder="Operating System">
+                                        <span class="text-danger" asp-validation-for="OperatingSystem"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input required asp-for="Processor" autocomplete="off" class="form-control form-control-user text-center" style="font-size: 15px;"
+                                               placeholder="Processor">
+                                        <span class="text-danger" asp-validation-for="Processor"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input required asp-for="Ram" autocomplete="off" class="form-control form-control-user text-center" style="font-size: 15px;"
+                                               placeholder="Ram">
+                                        <span class="text-danger" asp-validation-for="Ram"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input required asp-for="Space" autocomplete="off" class="form-control form-control-user text-center" style="font-size: 15px;"
+                                               placeholder="Space">
+                                        <span class="text-danger" asp-validation-for="Space"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input required asp-for="VideoCard" autocomplete="off" class="form-control form-control-user text-center" style="font-size: 15px;"
+                                               placeholder="Video Card">
+                                        <span class="text-danger" asp-validation-for="VideoCard"></span>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <select class="form-control" asp-for="GameCategoryId">
+                                            @foreach (var item in (List<GameCategory>)ViewBag.gameCategory)
+                                            {
+                                                <option value="@item.Id">@item.Name</option>
+                                            }
+
+
+                                        </select>
+
+                                        <span class="text-danger" asp-validation-for="GameCategory"></span>
+                                    </div>
+                                    <div class="form-group">
+
+                                        <select class="form-control" asp-for="CommonCategoryId">
+                                            @foreach (var item in (List<CommonCategory>)ViewBag.commonCategory)
+                                            {
+                                <option value="@item.Id">@item.Name</option>}
+
+
+                                        </select>
+
+                                        <span class="text-danger" asp-validation-for="Description"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="Photo" autocomplete="off" class="form-control form-control-user text-center" style="font-size: 15px;"
+                                               placeholder="Image">
+                                        <span class="text-danger" asp-validation-for="Photo"></span>
+                                    </div>
+                                    <button style="font-weight: bold; text-transform: uppercase;" type="submit" class="btn btn-primary btn-user btn-block">
+                                        Update
+                                    </button>
+                                    <hr>
+                                </form>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/32.0.0/ckeditor.min.js"></script>
+    <script>ClassicEditor.create(document.querySelector('#game-description')).catch(error => {
+            console.error(error);
+        });</script>
+
+}

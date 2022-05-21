@@ -1,0 +1,162 @@
+﻿@model Egamek_Business.ViewModels.HomeViewModel.HomeViewModel
+@{ ViewData["Title"] = "Home Page";
+    ViewData["GamesActive"] = "active"; }
+
+
+<section class="game-search">
+    <div class="container">
+        <button type="button" data-toggle="modal" data-target=".bd-game-search-modal-lg">
+            <div class="search-background">
+                <div class="search-icon">
+                    <img src="~/assets/img/bx_search-alt.png" alt="">
+                </div>
+                <div class="search-text">
+                    search
+                </div>
+            </div>
+        </button>
+    </div>
+
+    <div class="modal modal-search fade bd-game-search-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="search-modal">
+                    <form method="get" asp-controller="GameFind" asp-action="Index">
+                    <div class="search-area">
+                        <div class="search-input">
+                                <input type="search" placeholder="Please write game name">
+                        </div>
+                        <button><img src="~/assets/img/bx_search-alt.png"><p>search</p></button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@if (User.Identity.IsAuthenticated)
+{
+
+@if (Model.Operations.Count != 0)
+{
+<section class="popular-games">
+    <div class="container">
+        <div class="game-slider">
+            <div class="slider-title">
+                <img src="~/assets/img/popular%20games%20logo.png" alt="">
+                Favourite Games
+            </div>
+            <div class="slider-content">
+                <div class="game-carousel owl-carousel">
+           
+                                 @foreach (var item in @Model.Operations)
+                    {
+                        var game = Model.Game.Where(g => g.Id == item.GameId).FirstOrDefault();
+
+                        <div class="game-card-click">
+                            <a href="#">
+                                <div class="game-card">
+                                    <div class="game-photo">
+                                        <img src="~/assets/img/@game.Image" alt="">
+                                    </div>
+                                    <div class="game-card-content">
+                                        <div class="game-title">
+                                            @game.Name
+                                        </div>
+                                        <div class="game-fav">
+                                            <a asp-controller="Home" asp-action="DeleteFavourite" asp-route-id="@game.Id"><i class="bi bi-heart-fill"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                            }
+                           
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>}}
+
+@if (Model.CommonCategory.Count != 0)
+{
+@foreach (var commoncategory in Model.CommonCategory.Where(c => c.IsDeleted == false))
+{
+<section class="popular-games">
+    <div class="container">
+        <div class="game-slider">
+            <div class="slider-title">
+                <img src="~/assets/img/popular%20games%20logo.png" alt="">
+                @commoncategory.Name
+            </div>
+            <div class="slider-content">
+                <div class="game-carousel owl-carousel">
+
+                    @if (Model.Game.Count != 0)
+                    {
+
+                        @foreach (var game in Model.Game.Where(g => g.CommonCategoryId == @commoncategory.Id && g.IsDeleted == false))
+                        {
+                        <div class="game-card-click">
+                            <a asp-controller="GameDetail" asp-action="Index" asp-route-id="@game.Id">
+                                <div class="game-card">
+                                    <div class="game-photo">
+                                        <img src="~/assets/img/@game.Image" alt="">
+                                    </div>
+                                    <div class="game-card-content">
+                                        <div class="game-title">
+                                            @game.Name
+                                        </div>
+                                        <div class="game-fav">
+                                            
+                                            @*<a asp-controller="Home" asp-action="SetFavourite" asp-route-id="@game.Id"><i class="bi bi-heart"></i></a>*@
+                                            
+                                            @if (@Model.Operations.Count != 0)
+                                            {
+                                                @foreach (var operations in @Model.Operations)
+                                                {
+                                                    @if(operations.GameId==@game.Id && operations.IsFavourite==true)
+                                                    {
+                                                        <a asp-controller="Home" asp-action="DeleteFavourite" asp-route-id="@game.Id"><i class="bi bi-heart-fill"></i></a>
+                                                    }
+
+                                                    @if (operations.GameId != @game.Id)
+                                                    {
+                                                        <a asp-controller="Home" asp-action="SetFavourite" asp-route-id="@game.Id"><i class="bi bi-heart"></i></a>
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <a asp-controller="Home" asp-action="SetFavourite" asp-route-id="@game.Id"><i class="bi bi-heart"></i></a>
+                                            }
+
+                                            
+
+                                            
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        }
+
+                    }
+                    else
+                    {
+<p>Game is not found !</p>}
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>} }
+            else
+            {
+<p>Category is not found !</p>} 
