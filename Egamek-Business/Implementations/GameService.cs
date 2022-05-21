@@ -50,7 +50,7 @@ namespace Egamek_Business.Implementations
 
         public async Task<List<Game>> GetAllAsync()
         {
-            return await _unitOfWork.gameRepository.GetAllAsync(g=>g.IsDeleted == false);
+            return await _unitOfWork.gameRepository.GetAllAsync(g=>g.IsDeleted == false , "GameCategory" ,"CommonCategory");
         }
 
         public async Task Remove(int id)

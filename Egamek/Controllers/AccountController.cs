@@ -91,7 +91,7 @@ namespace Egamek.Controllers
 
                 if (emailResponse)
                 {
-                    await _userManager.AddToRoleAsync(newUser, UserRoles.Admin.ToString());
+                    await _userManager.AddToRoleAsync(newUser, UserRoles.User.ToString());
                     return RedirectToAction("ConfirmedEmail", "Account");
                 }
             }

@@ -23,20 +23,6 @@ namespace Egamek.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Index(string gameSearch)
-        //{
-        //    ViewData["SearchedGame"] = gameSearch;
-        //    //var productImage = await _productImageService.GetAllAsync();
-        //    var gameQuery = from p in await _unitOfWork.gameRepository.GetAllAsync(p => p.IsDeleted == false) select p;
-        //    if (!String.IsNullOrEmpty(gameSearch))
-        //    {
-        //        gameQuery =
-        //            gameQuery.Where(p => p.Name.Trim().ToLower().Contains(gameSearch.Trim().ToLower()));
-        //    }
-        //    //var pageProduct = await _productService.GetAllPaginatedAsync(page);
-        //    var Product = gameQuery.ToList();
-        //    return View(Product);
-        //}
+        
     }
 }

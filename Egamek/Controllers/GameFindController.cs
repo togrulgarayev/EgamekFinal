@@ -27,7 +27,9 @@ namespace Egamek.Controllers
             var game = await _gameService.GetAllAsync();
             var findGameViewModel = new FindGameViewModel()
             {
-                Game = game
+                Game = game,
+                GameCategory = await _gameCategoryService.GetAllAsync(),
+                CommonCategory = await _commonCategoryService.GetAllAsync()
             };
             return View(findGameViewModel);
         }
@@ -37,11 +39,15 @@ namespace Egamek.Controllers
         {
             ViewData["SearchedGame"] = gameSearch;
             //var productImage = await _productImageService.GetAllAsync();
-            var gameQuery = from p in await _unitOfWork.gameRepository.GetAllAsync(p => p.IsDeleted == false) select p;
+            //var gameQuery = from p in await _unitOfWork.gameRepository.GetAllAsync(p => p.IsDeleted == false) select p;
+            var gameQuery = await _gameService.GetAllAsync();
             if (!String.IsNullOrEmpty(gameSearch))
             {
-                gameQuery =
-                    gameQuery.Where(p => p.Name.Trim().ToLower().Contains(gameSearch.Trim().ToLower()) || p.GameCategory.Name.Trim().ToLower().Contains(gameSearch.Trim().ToLower()) || p.CommonCategory.Name.Trim().ToLower().Contains(gameSearch.Trim().ToLower()));
+                //gameQuery =
+                //    gameQuery.Where(p => p.Name.Trim().ToLower().Contains(gameSearch.Trim().ToLower()));
+
+                gameQuery = gameQuery.Where(g => g.Name.Trim().ToLower().Contains(gameSearch.Trim().ToLower()) || g.CommonCategory.Name.Trim().ToLower().Contains(gameSearch.Trim().ToLower()) || g.GameCategory.Name.Trim().ToLower().Contains(gameSearch.Trim().ToLower()))
+                    .ToList();
             }
             //var pageProduct = await _productService.GetAllPaginatedAsync(page);
             //var Product = gameQuery.ToList();
@@ -50,7 +56,7 @@ namespace Egamek.Controllers
 
             var findGameViewModel = new FindGameViewModel()
             {
-                Game = gameQuery.ToList(),
+                Game = gameQuery,
                 GameCategory = await _gameCategoryService.GetAllAsync(),
                 CommonCategory = await _commonCategoryService.GetAllAsync()
 
